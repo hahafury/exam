@@ -9,6 +9,7 @@ module.exports.parseBody = (req, res, next) => {
   for (let i = 0; i < req.body.contests.length; i++) {
     if (req.body.contests[ i ].haveFile) {
       const file = req.files.splice(0, 1);
+      console.log(file);
       req.body.contests[ i ].fileName = file[ 0 ].filename;
       req.body.contests[ i ].originalFileName = file[ 0 ].originalname;
     }

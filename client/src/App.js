@@ -22,6 +22,7 @@ import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatCo
 class App extends Component {
   render() {
     return (
+      if
       <Router history={browserHistory}>
         <ToastContainer
           position="top-center"
