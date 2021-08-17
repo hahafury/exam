@@ -9,6 +9,7 @@ const userQueries = require('./queries/userQueries');
 const bankQueries = require('./queries/bankQueries');
 const ratingQueries = require('./queries/ratingQueries');
 
+
 module.exports.login = async (req, res, next) => {
   try {
     const foundUser = await userQueries.findUser({ email: req.body.email });
@@ -24,12 +25,14 @@ module.exports.login = async (req, res, next) => {
       email: foundUser.email,
       rating: foundUser.rating,
     }, CONSTANTS.JWT_SECRET, { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME });
+    console.log(foundUser.id);
     await userQueries.updateUser({ accessToken }, foundUser.id);
     res.send({ token: accessToken });
   } catch (err) {
     next(err);
   }
 };
+
 module.exports.registration = async (req, res, next) => {
   try {
     const newUser = await userQueries.userCreation(

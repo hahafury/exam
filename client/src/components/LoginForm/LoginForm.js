@@ -6,6 +6,8 @@ import styles from './LoginForm.module.sass';
 import FormInput from '../FormInput/FormInput';
 import Schems from '../../validators/validationSchems';
 import Error from '../Error/Error';
+import {getAllEvents} from '../../api/rest/restController';
+import jwt_decode from 'jwt-decode';
 
 class LoginForm extends React.Component {
   componentWillUnmount() {

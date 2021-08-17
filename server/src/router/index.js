@@ -8,6 +8,24 @@ const validators = require('../middlewares/validators');
 const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
 const router = express.Router();
+const eventsController = require('../controllers/eventsController')
+
+//events
+
+router.post(
+  '/events/create',
+  eventsController.create,
+);
+
+router.delete(
+  '/events/:id',
+  eventsController.deleteEventById,
+);
+
+router.post(
+  '/events',
+  eventsController.getAllEvents,
+);
 
 router.post(
   '/registration',
@@ -16,11 +34,13 @@ router.post(
   userController.registration,
 );
 
+
 router.post(
   '/login',
   validators.validateLogin,
   userController.login,
 );
+
 
 router.post(
   '/dataForContest',
@@ -58,7 +78,7 @@ router.post(
   contestController.getContests,
 );
 
-router.post(
+router.get(
   '/getUser',
   checkToken.checkAuth,
 );
