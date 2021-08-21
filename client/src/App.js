@@ -20,6 +20,8 @@ import CONSTANTS from './constants';
 import browserHistory from './browserHistory';
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer';
 import Events from './pages/Events/index';
+import RecoveryPasswordPage from './pages/RecoveryPasswordPage/RecoveryPasswordPage';
+import RecoveryResult from './pages/RecoveryPasswordPage/RecoveryResult/RecoveryResult.js';
 
 class App extends Component {
   render() {
@@ -44,6 +46,8 @@ class App extends Component {
           <Route exact path="/payment" component={PrivateHoc(Payment)} />
           <Route exact path="/startContest" component={PrivateHoc(StartContestPage)} />
           <Route exact path="/events" component ={PrivateHoc(Events)}/>
+          <Route exact path="/recovery" component ={RecoveryPasswordPage}/>
+          <Route exact path="/recovery/" component ={RecoveryResult}/>
           <Route
             exact
             path="/startContest/nameContest"

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const CONSTANTS = require('../constants');
 const TokenError = require('../errors/TokenError');
 const userQueries =require('../controllers/queries/userQueries');
+const ServerError = require('../errors/ServerError');
 
 module.exports.checkAuth = async (req, res, next) => {
   const accessToken = req.headers.authorization;
@@ -32,7 +33,17 @@ module.exports.checkToken = async (req, res, next) => {
     return next(new TokenError('need token'));
   }
   try {
-    req.tokenData = jwt.verify(accessToken, CONSTANTS.JWT_SECRET);
+    next();
+  } catch (err) {
+    next(new TokenError());
+  }
+};
+
+module.exports.checkRecoveryToken = async (req, res, next) => {
+  if (!userQueries.findUser({ recovery: req.body.recovery })) {
+    return next(new ServerError('Link is invalid'));
+  }
+  try {
     next();
   } catch (err) {
     next(new TokenError());

@@ -6,6 +6,7 @@ export const authActionLogin = (data, history) => ({
   history,
 });
 
+
 export const authActionRegister = (data, history) => ({
   type: ACTION.AUTH_ACTION_REGISTER,
   data,
@@ -290,5 +291,41 @@ export const clearChatError = () => ({
 
 export const changeModalShow = (data) => ({
   type: ACTION.CHANGE_SHOW_MODAL,
+  data,
+});
+
+//-----Recovery Password
+
+export const recoveryPassword = (data, history) => ({
+  type: ACTION.RECOVERY_PASSWORD,
+  data,
+  history,
+});
+
+export const recoveryClear = (data, history) => ({
+  type: ACTION.RECOVERY_PASSWORD_CLEAR,
+  data,
+  history,
+});
+
+export const recoveryError = (data, history) => ({
+  type: ACTION.RECOVERY_PASSWORD_ERROR,
+  data,
+  history,
+});
+
+export const changePassword = (data, history) => ({
+  type: ACTION.CHANGE_PASSWORD,
+  data,
+  history,
+});
+
+export const changePasswordError = (data, history) => ({
+  type: ACTION.CHANGE_PASSWORD_ERROR,
+  data,
+});
+
+export const changePasswordErrorClear = (data, history) => ({
+  type: ACTION.CHANGE_PASSWORD_ERROR_CLEAR,
   data,
 });

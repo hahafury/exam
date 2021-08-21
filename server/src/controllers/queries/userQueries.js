@@ -36,3 +36,13 @@ module.exports.passwordCompare = async (pass1, pass2) => {
     throw new NotFound('Wrong password');
   }
 };
+
+module.exports.findRecoveryToken = async (predicate, transaction) => {
+  const result = await bd.Users.findOne({ where: predicate, transaction });
+  if (!result) {
+    throw new NotFound('user with this data didn`t exist');
+  } else {
+    return result.get({ plain: true });
+  }
+};
+

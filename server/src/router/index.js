@@ -5,10 +5,25 @@ const userController = require('../controllers/userController');
 const contestController = require('../controllers/contestController');
 const checkToken = require('../middlewares/checkToken');
 const validators = require('../middlewares/validators');
+const sendRecoveryToken = require('../middlewares/sendRecoveryToken');
 const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
 const router = express.Router();
-const eventsController = require('../controllers/eventsController')
+const eventsController = require('../controllers/eventsController');
+
+// recoveryPassword
+
+router.post(
+  '/recoveryRequest',
+  userController.recoveryPasswordRequest,
+  sendRecoveryToken,
+);
+
+router.post(
+  '/changePassword',
+  checkToken.checkRecoveryToken,
+  userController.changePassword,
+);
 
 //events
 

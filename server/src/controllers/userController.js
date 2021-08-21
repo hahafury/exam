@@ -9,7 +9,6 @@ const userQueries = require('./queries/userQueries');
 const bankQueries = require('./queries/bankQueries');
 const ratingQueries = require('./queries/ratingQueries');
 
-
 module.exports.login = async (req, res, next) => {
   try {
     const foundUser = await userQueries.findUser({ email: req.body.email });
@@ -56,6 +55,37 @@ module.exports.registration = async (req, res, next) => {
     } else {
       next(err);
     }
+  }
+};
+
+module.exports.recoveryPasswordRequest = async (req, res, next) => {
+  try{
+    const foundUser = await userQueries.findUser({ email: req.body.email });
+    const recovery = jwt.sign({
+      userId: foundUser.id,
+      password: req.hashPass,
+    }, CONSTANTS.JWT_SECRET, { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME });
+    Object.assign(req.body, { recoveryToken: recovery });
+    await userQueries.updateUser({ recovery }, foundUser.id);
+  } catch (err) {
+    next(err);
+  } finally {
+    next();
+  }
+};
+
+module.exports.changePassword = async (req, res, next) => {
+  const recoveryToken = req.body.recovery;
+  console.log('test');
+  console.log(req.body);
+  try{
+    const tokenData = jwt.verify(recoveryToken, CONSTANTS.JWT_SECRET);
+    await userQueries.updateUser({
+      password: tokenData.password,
+      recovery: null,
+    }, tokenData.userId);
+  } catch (err) {
+    next(err);
   }
 };
 
