@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,useState} from 'react';
 import { connect } from 'react-redux';
 import styles from './RecoveryResult.module.sass';
 import Header from '../../../components/Header/Header';
@@ -8,13 +8,12 @@ import {Link} from 'react-router-dom';
 
 const RecoveryResult = (props) => {
 
-    const [recoveryToken] = window.location.pathname;
     const {error} = props.recovery;
 
     useEffect(()=>{
         props.changePassword({
             data: {
-                recovery: recoveryToken.substring(10)
+                recovery: window.location.pathname.substring(10)
             }
         });
     },[]);
@@ -44,7 +43,7 @@ const RecoveryResult = (props) => {
             <Header/>
             {error 
                 ? passwordChangeError(error)
-                : passwordChangedSuccessfully
+                : passwordChangedSuccessfully()
             }
             <Footer/>
         </>

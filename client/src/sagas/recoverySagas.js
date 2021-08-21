@@ -7,7 +7,7 @@ export function* recoverySaga(action) {
     yield put({ type: ACTION.RECOVERY_PASSWORD_REQUEST });
     try {
       yield restController.recoveryPasswordRequest(action.data);
-      action.history.replace('/');
+      action.history.replace('/recovery');
       console.log(action.data);
       yield put({ type: ACTION.RECOVERY_PASSWORD_SEND_BY_MAIL });
     } catch (e) {
@@ -19,6 +19,7 @@ export function* changePassword(action){
   yield put({ type: ACTION.CHANGE_PASSWORD_REQUEST });
     try {
       yield restController.changePassword(action.data);
+      action.history.replace('/recovery/:token');
       console.log(action.data);
       yield put({ type: ACTION.CHANGE_PASSWORD_SUCCEED });
     } catch (e) {

@@ -2,11 +2,9 @@
 const nodemailer = require('nodemailer');
 const ServerError = require('../errors/ServerError');
 const userQueries = require('../controllers/queries/userQueries');
-const hashPass = require('./hashPassMiddle');
 
 module.exports = async (req, res, next) => {
     const foundUser = await userQueries.findUser({ email: req.body.email });
-    hashPass;
     try {
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -24,11 +22,10 @@ module.exports = async (req, res, next) => {
             subject: 'Message from Node js',
             text: ``,
             html:
-              `To reset your password follow the link <strong>localhost:5000/recovery/${foundUser.recovery}</strong>`,
+              `To reset your password follow the <a href = "http://localhost:5000/recovery/${foundUser.recovery}"><strong>link</strong></a>`,
           });
         res.send(result);
     } catch (err) {
         next (new ServerError('Server Error on send recovery token'));
     }
-
 };

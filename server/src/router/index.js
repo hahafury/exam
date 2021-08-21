@@ -15,6 +15,7 @@ const eventsController = require('../controllers/eventsController');
 
 router.post(
   '/recoveryRequest',
+  hashPass,
   userController.recoveryPasswordRequest,
   sendRecoveryToken,
 );

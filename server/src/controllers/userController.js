@@ -76,7 +76,6 @@ module.exports.recoveryPasswordRequest = async (req, res, next) => {
 
 module.exports.changePassword = async (req, res, next) => {
   const recoveryToken = req.body.recovery;
-  console.log('test');
   console.log(req.body);
   try{
     const tokenData = jwt.verify(recoveryToken, CONSTANTS.JWT_SECRET);
