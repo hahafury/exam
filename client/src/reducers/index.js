@@ -11,8 +11,10 @@ import updateContestReducer from './updateContestReducer';
 import chatReducer from './chatReducer';
 import userProfileReducer from './userProfileReducer';
 import recoveryReducer from './recoveryReducer';
+import eventsReducer from './eventsReducer';
 
 const appReducer = combineReducers({
+  eventsReducer: eventsReducer,
   userStore: getUserReducer,
   auth: authReducer,
   dataForContest: dataForContestReducer,

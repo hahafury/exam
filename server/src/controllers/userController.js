@@ -69,8 +69,6 @@ module.exports.recoveryPasswordRequest = async (req, res, next) => {
     await userQueries.updateUser({ recovery }, foundUser.id);
   } catch (err) {
     next(err);
-  } finally {
-    next();
   }
 };
 

@@ -1,51 +1,62 @@
-import React, {useState, useEffect}from 'react';
+import React from 'react';
 import  { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CONSTANTS from '../../constants';
 import styles from './Events.module.sass';
 import Header from '../../components/Header/Header';
-import EventElement from './EventElement/EventElement';
+import EventContainer from './EventContainer/EventContainer';
+import EventCreateForm from './EventCreateForm/EventCreateForm';
+import { changeEventsModeView } from '../../actions/actionCreator'
 
 
-const Events = () => {
-
-    const mapEvents = (event, index) => {
-        return (
-                <EventElement event = {event}/>
-        );
-    };
-
-    const eventsSort = (a,b) => {
-        if (Date.parse(a.eventDeadline) > Date.parse(b.eventDeadline)) return 1
-        if (Date.parse(a.eventDeadline) < Date.parse(b.eventDeadline)) return -1
-        else return 0
-    }
-    
+const Events = (props) => {
+    const {
+        eventsModeView, changeMode,
+    } = props;
+    setTimeout(()=>{
+        console.log(eventsModeView);
+    },500)
     if (localStorage.getItem('accessToken') == null) 
         return <Redirect to="/login"/>;
     else
         return(
             <>
                 <Header/>
-                <div className = {styles.events}>
-                    <div className = {styles.eventHeader}>
-                        <p>Live upcomming checks</p>
-                        <div className = {styles.remainingTime}>
-                            Remaining time
-                            <img src = "https://i.imgur.com/mvHW8IJ.png"></img>
+                <div className = {styles.eventsPageContainer}>
+                    <div className={styles.aside}>
+                        <span className={styles.headerAside}>Select Option</span>
+                        <div className={styles.optionsContainer}>
+                            <div 
+                                className= {styles.optionContainer}
+                                onClick = {()=>{changeMode(CONSTANTS.EVENTS_INFO_MODE)}}
+                            >
+                                Events
+                            </div>
+                            <div
+                                className= {styles.optionContainer}
+                                onClick = {()=>{changeMode(CONSTANTS.EVENTS_CREATE_MODE)}}
+                            >
+                                Create event
+                            </div>
                         </div>
                     </div>
-                    
-                    <div className = {styles.eventForm}>
-                        {
-                            JSON.parse(localStorage.getItem('events')).map(mapEvents).sort(eventsSort)
-                        }
+                    <div>
+                        {eventsModeView === CONSTANTS.EVENTS_INFO_MODE ? <EventContainer/> : <EventCreateForm/>}
                     </div>
-                </div>  
-                
+                </div>
             </>
         );
 
 }
 
-export default Events;
+const mapStateToProps = (state) => {
+    const { data } = state;
+    const { eventsModeView } = state.eventsReducer;
+    return { data, eventsModeView} ;
+};
+  
+const mapDispatchToProps = (dispatch) => ({
+    changeMode: (data) => dispatch(changeEventsModeView(data)),
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Events);

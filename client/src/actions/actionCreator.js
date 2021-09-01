@@ -329,3 +329,10 @@ export const changePasswordErrorClear = (data, history) => ({
   type: ACTION.CHANGE_PASSWORD_ERROR_CLEAR,
   data,
 });
+
+//-----Events
+
+export const changeEventsModeView = (data, history) => ({
+  type: ACTION.CHANGE_EVENTS_MODE_VIEW,
+  data,
+});

@@ -16,7 +16,7 @@ const EventElement = (props) => {
             if(currentProgressbarPosition < overralProgressbarValue){
                 setCurrentProgressbarPosition(currentProgressbarPosition + 1000);
                 setProgressbarWidth((currentProgressbarPosition/overralProgressbarValue)*100);
-            } else if(currentProgressbarPosition === overralProgressbarValue){
+            } else if(currentProgressbarPosition >= overralProgressbarValue){
                 setProgressbarWidth(100)
                 clearInterval(tick);
             }            
@@ -24,7 +24,7 @@ const EventElement = (props) => {
         return () => {
             clearInterval(tick);
         }
-    });
+    },[]);
 
     
     return(
